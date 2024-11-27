@@ -1,0 +1,8 @@
+# Requires Python 3.11.4
+Flask==2.3.2
+ultralytics==8.2.96
+numpy==1.26.3
+pillow==10.2.0
+opencv-python==4.10.0.84
+torch==2.5.1
+huggingface_hub==0.26.2
