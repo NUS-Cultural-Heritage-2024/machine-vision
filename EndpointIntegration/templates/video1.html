@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Object Detection</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f06, #48f);
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        img {
+            border: 5px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            height: auto;
+        }
+
+        .info-box {
+            margin-left: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            font-size: 1.2em;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stick Detection and Classification Application</h1>
+
+    <div class="content">
+        <!-- Video feed -->
+        <img id="video" src="/video_feed" alt="Video Feed">
+
+        <!-- Stick detection details -->
+        <div class="info-box">
+            <h2>Stick Coordinates</h2>
+            <p id="puppet-arm-top">Puppet Arm Top: (x: 0, y: 0)</p>
+            <p id="puppet-arm-bottom">Puppet Arm Bottom: (x: 0, y: 0)</p>
+            <p id="puppet-body-top">Puppet Body Top: (x: 0, y: 0)</p>
+            <p id="puppet-body-bottom">Puppet Body Bottom: (x: 0, y: 0)</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch stick data from Flask backend every second
+        function fetchStickData() {
+            fetch('/stick_data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('puppet-arm-top').textContent = `Puppet Arm Top: (x: ${data.puppetArmTop.x}, y: ${data.puppetArmTop.y})`;
+                    document.getElementById('puppet-arm-bottom').textContent = `Puppet Arm Bottom: (x: ${data.puppetArmBottom.x}, y: ${data.puppetArmBottom.y})`;
+                    document.getElementById('puppet-body-top').textContent = `Puppet Body Top: (x: ${data.puppetBodyTop.x}, y: ${data.puppetBodyTop.y})`;
+                    document.getElementById('puppet-body-bottom').textContent = `Puppet Body Bottom: (x: ${data.puppetBodyBottom.x}, y: ${data.puppetBodyBottom.y})`;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Fetch data every second
+        setInterval(fetchStickData, 1000);
+    </script>
+</body>
+</html>
