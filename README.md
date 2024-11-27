@@ -1,6 +1,8 @@
 # machine-vision
 Repository for the Sticks endpoint classification and detection
 
+Model Test Script - yoloModelTestScript.py
+
 This Python script utilizes a YOLO (You Only Look Once) model to perform real-time object detection and tracking, specifically designed for detecting and localizing four key points on a stick-like object. It generates normalized coordinates in JSON format for further use, such as puppet control systems.
 
 ## **Features**
